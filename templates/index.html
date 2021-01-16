@@ -1,0 +1,161 @@
+{% load static %} {% static "" as baseURL %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ParcelGo!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{{baseURL}}style.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rambla:ital,wght@1,700&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="/">
+                <!-- <img src="https://assets.stickpng.com/images/5842a75fa6515b1e0ad75afc.png" width="75" height="35"> -->
+                <img src="https://img.icons8.com/cotton/64/000000/cardboard-box--v2.png"/> &nbsp;
+                <p style="font-size: 35px; font-family: 'Rambla', sans-serif;"> parcelgo</p>
+              </a>
+          
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
+            </div>
+          
+            <div id="navbarBasicExample" class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item" href="#home">
+                  Home
+                </a>
+          
+                <a class="navbar-item" href="#about-us">
+                  About Us
+                </a>
+
+                <a class="navbar-item" href="#contact">
+                    Contact
+                  </a>
+
+          
+                </div>
+              </div>
+          
+              <div class="navbar-end">
+                <div class="navbar-item">
+                  <div class="buttons">
+                    <a class="button is-info" href="/signup">
+                      <strong>Sign up</strong>
+                    </a>
+                    <a class="button is-light" href="/login">
+                      Log in
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+    </div>
+    <br>
+    <div class="container">
+        <img src="{{baseURL}}trans.jpeg"  style="width:100%;">
+        <div class="centered">
+            <p class="title is-1" style="color: white;">We Make Delivery
+                Fast and Simple</p>
+            <p class="subtitle is-3" style="color: white;">ParcelGo provides on-demand & same day delivery services by connecting users with delivery drivers on its web app</p>
+               
+        </div>
+      </div>
+      <br><br>
+     <div class="container" id="about-us">
+        
+            <p class="title is-2 is-spaced" style="text-align: center;">About Us</p>
+            <p class="subtitle is-4">Established in December 2013, ParcelGo was created to make on-demand and same-day delivery possible for everyone at the touch of a button. Today, ParcelGo operates in 24 markets across Asia, Latin America and the United States connecting over 7 million registered users with a pool of over 700,000 driver partners. Our driver partners operate a vast array of vehicles to suit each market including lorries, vans and cars for deliveries of almost anything of any size. Fleets of two-wheel vehicles are also available for courier services providing fast and low-cost delivery solutions. Through dedicated mobile and web apps, ParcelGo seamlessly connects users and drivers around the world to move things that matter.</p>
+            <p class="subtitle is-4">ParcelGo has become the strategic partner for businesses of all sizes to solve their last-mile delivery issues. From independent brick and mortar stores to large restaurants, retail chains and e-commerce businesses, ParcelGo helps enterprises from a wide array of industries to scale and outsource their deliveries according to their needs. Companies no longer need to invest in running and maintaining in-house fleets thanks to our unique tech advantages that allow for same-day and advance bookings, and real-time tracking. To add to your convenience, you can pay through our e-wallet and get digital receipts emailed to you so you can keep track of all your deliveries. Additionally, our multi-stop and route optimisation features helps your business save time and money. API integration also offers the chance for businesses to take their deliveries to the next level and receive the most comprehensive level of logistical support.</p>
+            <p class="subtitle is-4">ParcelGo currently operates in Hong Kong, Taipei, Singapore, Kuala Lumpur, Manila, Cebu, Pattaya, Bangkok, Hanoi, Ho Chi Minh City, Jakarta, Pune, Delhi, Chennai, Mumbai, Hyderabad, Ahmedabad, Bengaluru, Sao Paulo, Rio de Janeiro, Mexico City, Dallas, Chicago and Houston.</p>
+        
+     </div>
+     <br><br>
+     <div class="container">
+        <hr>
+      <nav class="level">
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Tweets</p>
+              <p class="title">3,456</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Following</p>
+              <p class="title">123</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Followers</p>
+              <p class="title">456K</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Likes</p>
+              <p class="title">789</p>
+            </div>
+          </div>
+        </nav>
+        <hr>
+    </div>
+    <br><br>
+    
+    <div class="container" id="contact">
+        <p class="title is-2 is-spaced" style="text-align: center;">Contact</p>
+        <div class="container my-5 mt-5 mx-5 px-5">
+            <!-- <h2 class="title is-2 is-capitalized">Contact Us</h2> -->
+            <form action="" method="post">
+                <div class="field">
+                    <label for="name" class="label is-size-4 has-text-weight-light"></label>
+                    <div class="control has-icons-left">
+                        <input type="text" name="name" id="name" class="input" placeholder="Name">
+                            <span class="icon is-left">
+                                <i class="fa fa-user"></i>
+                            </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="email" class="label is-size-4 has-text-weight-light"></label>
+                    <div class="control has-icons-left">
+                        <input type="email" name="email" id="email" class="input" placeholder="Email">
+                            <span class="icon is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="message" class="label is-size-4 has-text-weight-light"></label>
+                    <textarea name="message" id="message" rows="5" class="textarea is-medium" placeholder="Message"></textarea>
+                </div>
+                <button type="submit" class="button is-success is-size-5">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+  </section>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        ParcelGo | © 2021 <strong>ParcelGo</strong> All Rights Reserved
+      </p>
+    </div>
+  </footer>
+  </body>
+</html>

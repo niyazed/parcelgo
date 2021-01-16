@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html style="background-color: #EFEFEF;">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ParcelGo!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rambla:ital,wght@1,700&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <section class="section">
+        <div class="container is-max-desktop"> 
+            <a href="/">
+                <img style="float: left;" src="https://img.icons8.com/cotton/64/000000/cardboard-box--v2.png"/> &nbsp;
+                <p style="font-size: 35px; font-family: 'Rambla', sans-serif; margin-top: -23px;"> parcelgo</p><br>
+              </a>
+            <div class="columns">
+                <div class="column is-narrow">
+                  
+                  <div class="box" style="width: 400px;">
+                    <form action="" method="POST">
+                      {% csrf_token %}
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                          <input class="input" type="name" placeholder="Name" name="name">
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                          </span>
+                        </p>
+                      </div>
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                          <input class="input" type="number" placeholder="Phone" name="phone">
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-phone"></i>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                          <input class="input" type="email" placeholder="Email" name="email">
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="field">
+                        <p class="control has-icons-left">
+                          <input class="input" type="password" placeholder="Password" name="password1">
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="field">
+                        <p class="control has-icons-left">
+                          <input class="input" type="password" placeholder="Confirm Password" name="password2">
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </p>
+                      </div>
+
+                      <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                          <input class="input" type="text" placeholder="Address" name="address">
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-address-card"></i>
+                          </span>
+                        </p>
+                      </div>
+
+                      <div class="field is-grouped">
+                        <div class="control">
+                            <label for="usertype">Choose type:</label> &nbsp;
+                            <div class="select">
+                                <select name="usertype" id="usertype">
+                                    <option value="Customer">Customer</option>
+                                    <option value="Deliveryman">Deliveryman</option>
+                                  </select>
+                            </div>
+                        </div>
+                       
+                      </div>
+
+                      <div class="field">
+                        <p class="control">
+                          <button class="button is-success" type="submit">
+                            Sign Up
+                          </button>
+                        </p>
+                      </div>
+                    </form>
+                      
+                      <p>Already have an account? <a href="/login">Login</a></p>
+                  </div>
+                </div>
+                <div class="column">
+                  
+                </div>
+              </div>
+        </div>
+    </section>
+  </body>
+</html>

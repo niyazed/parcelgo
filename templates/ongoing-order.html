@@ -1,0 +1,240 @@
+{% load static %} {% static "" as baseURL %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ParcelGo!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{{baseURL}}style.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/octoshrimpy/bulma-o-steps/master/bulma-steps.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rambla:ital,wght@1,700&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <header class="hero is-light" style="padding: 10px;">
+        <div class="hero-head">
+          <!-- Main container -->
+<nav class="level">
+    <!-- Left side -->
+    <div class="level-left">
+      <div class="level-item">
+            <img style="float: left;" src="https://img.icons8.com/cotton/64/000000/cardboard-box--v2.png"/>
+      </div>
+      <div class="level-item">
+            <p style="font-size: 35px; font-family: 'Rambla', sans-serif; margin-top: -15px;"> parcelgo</p>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/cdash">
+          Place Order
+        </a>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/ongoing-order">
+          Ongoing Order
+        </a>
+      </div>
+      <!-- <div class="level-item">
+        <a class="navbar-item" href="/order-history">
+          Order History
+        </a>
+      </div> -->
+
+    </div>
+  
+    <!-- Right side -->
+    <div class="level-right">
+      <p class="level-item"><strong>{{ username }}</strong></p>
+      <form action="/login">
+        {% csrf_token %}
+      <button class="button is-danger">
+        Logout
+      </button>
+    </form>
+    </div>
+  </nav>
+        </div>
+      </header>
+      
+      <div class="section">
+        <div class="container">
+          <h1 class="subtitle is-2"><strong>Customer Dashboard | </strong>Ongoing Order</h1>
+          <hr>
+          <div class="box">
+            <ul class="steps is-narrow is-medium is-centered has-content-centered">
+              <li class="steps-segment">
+                <a href="#" class="has-text-dark">
+                  <span class="steps-marker">
+                    <span class="icon">
+                      <i class="fa fa-shopping-cart"></i>
+                    </span>
+                  </span>
+                  <div class="steps-content">
+                    <p class="heading">Order Placed</p>
+                  </div>
+                </a>
+              </li>
+              <li class="steps-segment">
+                <a href="#" class="has-text-dark">
+                  <span class="steps-marker">
+                    <span class="icon">
+                      <i class="fa fa-user"></i>
+                    </span>
+                  </span>
+                  <div class="steps-content">
+                    <p class="heading">Order Picked</p>
+                  </div>
+                </a>
+              </li>
+              <li class="steps-segment is-active has-gaps">
+                <span class="steps-marker">
+                  <span class="icon">
+                    <i class="fa fa-usd"></i>
+                  </span>
+                </span>
+                <div class="steps-content">
+                  <p class="heading">Payment</p>
+                </div>
+              </li>
+              <li class="steps-segment">
+                <span class="steps-marker is-hollow">
+                  <span class="icon">
+                    <i class="fa fa-check"></i>
+                  </span>
+                </span>
+                <div class="steps-content">
+                  <p class="heading">Delivered</p>
+                </div>
+              </li>
+              
+            </ul>
+          </div>
+
+
+
+          <div class="columns">
+              <div class="column is-narrow">
+                <div class="box" style="width: 400px;">
+                  <p class="title is-5">Parcel Information</p>
+                  <hr>
+                  <fieldset disabled>
+                  <label class="label">Height</label>
+                  <div class="field has-addons">
+                    <p class="control">
+                      <input class="input" type="text" placeholder="{{ height }}" name="height">
+                    </p>
+                    <p class="control">
+                      <a class="button is-static">
+                        Centimeter(cm)
+                      </a>
+                    </p>
+                  </div>
+  
+                  <label class="label">Width</label>
+                  <div class="field has-addons">
+                    <p class="control">
+                      <input class="input" type="text" placeholder="{{ width}} " name="width">
+                    </p>
+                    <p class="control">
+                      <a class="button is-static">
+                        Centimeter(cm)
+                      </a>
+                    </p>
+                  </div>
+  
+                  <label class="label">Length</label>
+                  <div class="field has-addons">
+                    <p class="control">
+                      <input class="input" type="text" placeholder="{{length}}" name="length">
+                    </p>
+                    <p class="control">
+                      <a class="button is-static">
+                        Centimeter(cm)
+                      </a>
+                    </p>
+                  </div>
+  
+           
+                  <label class="label">Weight</label>
+                  <div class="field has-addons">
+                    <p class="control">
+                      <input class="input" type="text" placeholder="{{weight}}" name="weight">
+                    </p>
+                    <p class="control">
+                      <a class="button is-static">
+                        Kilogram(kg)
+                      </a>
+                    </p>
+                  </div>
+                  <hr>
+                  <span><h6 class="title is-6">Total Cost: {{ total_price }}</h6></span>
+                </fieldset>
+  
+                </div>
+              </div>
+
+            <div class="column">
+              <fieldset disabled>
+                <div class="box">
+                  <p class="title is-5">Other's Information</p>
+                  <hr>
+                  <div class="field">
+                    <label class="label">Reciever's Name</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="{{rcvr_name}}" name="rcvr_name">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">Reciever's Phone</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="{{rcvr_phone}}" name="rcvr_phone">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">Pickup Address</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="{{pickup_address}}" name="pickup_address">
+                    </div>
+                  </div>
+  
+                  <div class="field">
+                    <label class="label">Deliver Address</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="{{deliver_address}}" name="deliver_address">
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+            </div>
+            <div class="column">
+              <fieldset disabled>
+              <div class="box">
+                <p class="title is-5">Deliveryman Information</p>
+                <hr>
+                <div class="field">
+                  <label class="label">Deliveryman's Name</label>
+                  <div class="control">
+                    <input class="input" type="text" placeholder="{{delman_name}}" >
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label">Deliveryman's Phone</label>
+                  <div class="control">
+                    <input class="input" type="text" placeholder="{{delman_phone}}">
+                  </div>
+                </div>
+                </div>
+              </div>
+              <fieldset>
+          </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
