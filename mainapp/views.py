@@ -20,16 +20,17 @@ def login(request):
         except:
             return redirect("/login")
         
-        if str(data.phone) == str(request.POST['phone']) and str(data.password) == str(request.POST['password']):
+        if str(data.password) == str(request.POST['password']):
             request.session['name'] = data.name
             request.session['phone'] = data.phone
+            print(request.session['phone'])
             request.session['usertype'] = data.usertype
             print(data.name)
 
             if str(data.usertype) == 'Customer':
                 return redirect("/cdash", {"username": request.session['name']})
             else:
-                return render("/ddash", {"username": request.session['name']})
+                return redirect("/ddash", {"username": request.session['name']})
         else:
             return redirect("/login")    
     else:
@@ -73,7 +74,13 @@ def signup(request):
     return render(request, "signup.html")
 
 def ddash(request):
-    return render(request, "ddash.html")
+    try:
+        order = Orders.objects.get(delman_phone = request.session['phone'])
+        if order.order_status == 'picked':
+            return render(request, "ddash.html", {"already": 'You have already picked an order!'})
+    except:
+        orders = Orders.objects.filter(order_status = 'placed')
+        return render(request, "ddash.html", {"orders": orders})
 
 
 
@@ -128,36 +135,88 @@ def cdash(request):
         
 
     else:
-        order = Orders.objects.get(sender_phone = request.session['phone'])
-        if order.order_status == 'placed':
-            return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
-        else:
+        
+        try:
+            order = Orders.objects.get(sender_phone = request.session['phone'])
+            print("here")
+            if order.order_status != 'delivered':
+                return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
+        except:
             return render(request, "cdash.html")
 
 
 
 def ongoing_order(request):
-    orders = Orders.objects.get(sender_phone = request.session['phone'])
-    
-    context = {
-        "height": orders.parcel_height,
-        "width": orders.parcel_width,
-        "length": orders.parcel_length,
-        "weight": orders.parcel_weight,
-        "total_price": orders.total_price,
+    try:
+        orders = Orders.objects.get(sender_phone = request.session['phone'])
+        
+        context = {
+            "height": orders.parcel_height,
+            "width": orders.parcel_width,
+            "length": orders.parcel_length,
+            "weight": orders.parcel_weight,
+            "total_price": orders.total_price,
 
-        "rcvr_name": orders.receiver_name,
-        "rcvr_phone": orders.receiver_phone,
+            "rcvr_name": orders.receiver_name,
+            "rcvr_phone": orders.receiver_phone,
 
-        "pickup_address": orders.pickup_address,
-        "deliver_address": orders.deliver_address,
+            "pickup_address": orders.pickup_address,
+            "deliver_address": orders.deliver_address,
 
-        "delman_name": orders.delman_name,
-        "delman_phone": orders.delman_phone
-    }
-    return render(request, "ongoing-order.html", context)
+            "delman_name": orders.delman_name,
+            "delman_phone": orders.delman_phone
+        }
+        return render(request, "ongoing-order.html", context)
+    except:
+        return render(request, "ongoing-order.html")
 
 
 
-def order_history(request):
-    return render(request, "order-history.html")
+def picked_order(request):
+    if request.method == 'POST':
+        ord_id = request.POST['pickup-btn']
+        orders = Orders.objects.get(order_id = ord_id)
+        orders.delman_name = request.session['name']
+        orders.delman_phone = request.session['phone']
+        orders.order_status = "picked"
+        orders.save()
+
+        
+
+        context = {
+                "height": orders.parcel_height,
+                "width": orders.parcel_width,
+                "length": orders.parcel_length,
+                "weight": orders.parcel_weight,
+                "total_price": orders.total_price,
+
+                "rcvr_name": orders.receiver_name,
+                "rcvr_phone": orders.receiver_phone,
+
+                "pickup_address": orders.pickup_address,
+                "deliver_address": orders.deliver_address,
+
+                "delman_name": orders.delman_name,
+                "delman_phone": orders.delman_phone
+            }
+    else:
+        orders = Orders.objects.get(delman_phone = request.session['phone'])
+        print(orders)
+        context = {
+            "height": orders.parcel_height,
+            "width": orders.parcel_width,
+            "length": orders.parcel_length,
+            "weight": orders.parcel_weight,
+            "total_price": orders.total_price,
+
+            "rcvr_name": orders.receiver_name,
+            "rcvr_phone": orders.receiver_phone,
+
+            "pickup_address": orders.pickup_address,
+            "deliver_address": orders.deliver_address,
+
+            "delman_name": orders.delman_name,
+            "delman_phone": orders.delman_phone
+        }
+        # return render(request, "picked-order.html", context)
+    return render(request, "picked-order.html", context)
