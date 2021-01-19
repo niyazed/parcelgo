@@ -12,4 +12,5 @@ urlpatterns = [
     
     path('ongoing-order', views.ongoing_order, name='ongoing-order'),
     path('picked-order', views.picked_order, name='picked-order'),
+    path('delivered', views.delivered, name='delivered'),
 ]

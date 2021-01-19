@@ -38,7 +38,6 @@ def login(request):
 
 
 
-
 def logout(request):
     request.session.flush()
     return redirect("/login")
@@ -70,17 +69,30 @@ def signup(request):
         else:
             return redirect("/signup")
 
-
     return render(request, "signup.html")
+
+
 
 def ddash(request):
     try:
         order = Orders.objects.get(delman_phone = request.session['phone'])
         if order.order_status == 'picked':
-            return render(request, "ddash.html", {"already": 'You have already picked an order!'})
+            return render(request, "ddash.html", {"picked": 'You have already picked an order!'})
+        else:
+            orders = Orders.objects.filter(order_status = 'placed')
+            return render(request, "ddash.html", {"orders": orders})
     except:
-        orders = Orders.objects.filter(order_status = 'placed')
-        return render(request, "ddash.html", {"orders": orders})
+        # orders = Orders.objects.filter(order_status = 'placed')
+        return render(request, "ddash.html")
+
+
+
+def delivered(request):
+    if request.method == 'POST':
+        order = Orders.objects.get(delman_phone = request.session['phone'])
+        order.order_status = 'delivered'
+        order.save()
+        return render(request, "ddash.html", {"delivered": 'Order delivered Successfully!'})
 
 
 
@@ -132,10 +144,8 @@ def cdash(request):
         orders.save()
 
         return redirect("/ongoing-order")
-        
-
+    
     else:
-        
         try:
             order = Orders.objects.get(sender_phone = request.session['phone'])
             print("here")
@@ -181,8 +191,6 @@ def picked_order(request):
         orders.order_status = "picked"
         orders.save()
 
-        
-
         context = {
                 "height": orders.parcel_height,
                 "width": orders.parcel_width,
@@ -201,7 +209,7 @@ def picked_order(request):
             }
     else:
         orders = Orders.objects.get(delman_phone = request.session['phone'])
-        print(orders)
+        
         context = {
             "height": orders.parcel_height,
             "width": orders.parcel_width,

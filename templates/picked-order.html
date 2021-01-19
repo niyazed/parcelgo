@@ -181,14 +181,15 @@
                 </div>
               </fieldset>
                 <br>
-              <button class="button is-success is-small">
-                Delivered
-              </button>
-              </div>
-              </div>
+                <form action="/delivered" method="POST">
+                  {% csrf_token %}
+                  <button class="button is-success is-small">
+                    Delivered
+                  </button>
+                </form>
               
-              
-                
+              </div>
+              </div> 
           </div>
           </div>
         </div>

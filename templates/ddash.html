@@ -59,8 +59,10 @@
   </nav>
         </div>
       </header>
-      {% if already %}
-        <p class="title is-5">{{ already }}</p>
+      {% if picked %}
+        <p class="title is-5">{{ picked }}</p>
+      {% elif delivered %}
+        <p class="title is-5">{{ delivered }}</p>
       {% else %}
 
       <div class="section">
