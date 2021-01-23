@@ -38,11 +38,11 @@
           Ongoing Order
         </a>
       </div>
-      <!-- <div class="level-item">
+      <div class="level-item">
         <a class="navbar-item" href="/order-history">
           Order History
         </a>
-      </div> -->
+      </div>
 
     </div>
   
@@ -124,12 +124,26 @@
                       </a>
                     </p>
                   </div>
+
+                  <label class="label">Distance</label>
+                  <p class="help">Please input your Google Map distance here:</p>
+                  <div class="field has-addons">
+                    <p class="control">
+                      <input class="input" type="text" placeholder="distance" name="distance">
+                    </p>
+                    <p class="control">
+                      <a class="button is-static">
+                        Kilometer(km)
+                      </a>
+                    </p>
+                  </div>
+
                   <div class="control">
                     <button class="button is-info" name="cost_cal" value="cost_cal">Calculate</button>
                   </div>
                   <hr>
                   {% if total_price %}
-                    <span><h6 class="title is-6">Total Cost: {{ total_price }}</h6></span>
+                    <span><h6 class="title is-6">Total Cost: {{ total_price }} RM</h6></span>
                   {% endif %}
   
                 </div>

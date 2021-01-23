@@ -18,7 +18,7 @@ def login(request):
         try:
             data = Register.objects.get(phone = request.POST['phone'])
         except:
-            return redirect("/login")
+            return render(request, "login.html", {"invalid_cred": 'Invalid Credentials'}) 
         
         if str(data.password) == str(request.POST['password']):
             request.session['name'] = data.name
@@ -32,7 +32,8 @@ def login(request):
             else:
                 return redirect("/ddash", {"username": request.session['name']})
         else:
-            return redirect("/login")    
+            # return redirect("/login")
+            return render(request, "login.html", {"invalid_cred": 'Invalid Credentials'})    
     else:
         return render(request, "login.html")
 
@@ -82,14 +83,15 @@ def ddash(request):
             orders = Orders.objects.filter(order_status = 'placed')
             return render(request, "ddash.html", {"orders": orders})
     except:
-        # orders = Orders.objects.filter(order_status = 'placed')
-        return render(request, "ddash.html")
+        orders = Orders.objects.filter(order_status = 'placed')
+        return render(request, "ddash.html", {"orders": orders})
+        # return render(request, "ddash.html")
 
 
 
 def delivered(request):
     if request.method == 'POST':
-        order = Orders.objects.get(delman_phone = request.session['phone'])
+        order = Orders.objects.get(delman_phone = request.session['phone'], order_status = 'picked')
         order.order_status = 'delivered'
         order.save()
         return render(request, "ddash.html", {"delivered": 'Order delivered Successfully!'})
@@ -102,14 +104,16 @@ def cdash(request):
         width = request.POST['width'].replace(" ","")
         length = request.POST['length'].replace(" ","")
         weight = request.POST['weight'].replace(" ","")
-        base_price = 30
+        distance = request.POST['distance'].replace(" ","")
+        base_price = 5
 
-        total_price = int(height) * int(width) * int(length) * int(weight) * base_price
+        total_price = int(height) + int(width) + int(length) + int(weight) + base_price * int(distance)
 
         request.session['height'] = height
         request.session['width'] = width
         request.session['length'] = length
         request.session['weight'] = weight
+        request.session['distance'] = distance
         request.session['total_price'] = total_price
 
         return render(request, "cdash.html", {"total_price": total_price})
@@ -129,6 +133,7 @@ def cdash(request):
         orders.parcel_width = request.session['width']
         orders.parcel_length = request.session['length']
         orders.parcel_weight = request.session['weight']
+        # orders.distance = request.session['distance']
         orders.total_price = request.session['total_price']
 
         orders.sender_name = request.session['name']
@@ -147,18 +152,22 @@ def cdash(request):
     
     else:
         try:
-            order = Orders.objects.get(sender_phone = request.session['phone'])
-            print("here")
-            if order.order_status != 'delivered':
+            order = Orders.objects.get(sender_phone = request.session['phone'], order_status = 'placed')
+            if order.order_status == 'placed' or order.order_status == 'picked':
                 return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
         except:
             return render(request, "cdash.html")
+
+        # if order.order_status == 'placed' or order.order_status == 'picked':
+        #     return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
+        # else:
+        #     return render(request, "cdash.html") 
 
 
 
 def ongoing_order(request):
     try:
-        orders = Orders.objects.get(sender_phone = request.session['phone'])
+        orders = Orders.objects.get(sender_phone = request.session['phone'], order_status = 'placed')
         
         context = {
             "height": orders.parcel_height,
@@ -179,6 +188,7 @@ def ongoing_order(request):
         return render(request, "ongoing-order.html", context)
     except:
         return render(request, "ongoing-order.html")
+        
 
 
 
@@ -208,8 +218,10 @@ def picked_order(request):
                 "delman_phone": orders.delman_phone
             }
     else:
-        orders = Orders.objects.get(delman_phone = request.session['phone'])
-        
+        try:
+            orders = Orders.objects.get(delman_phone = request.session['phone'], order_status = 'picked')
+        except:
+            return render(request, "picked-order.html")
         context = {
             "height": orders.parcel_height,
             "width": orders.parcel_width,
@@ -228,3 +240,11 @@ def picked_order(request):
         }
         # return render(request, "picked-order.html", context)
     return render(request, "picked-order.html", context)
+
+def payment(request):
+    return render(request, "payment.html")
+
+
+def order_history(request):
+    orders = Orders.objects.filter(order_status = 'delivered', sender_phone = request.session['phone'])
+    return render(request, "order-history.html", {"orders": orders})

@@ -19,11 +19,15 @@
             <img style="float: left;" src="https://img.icons8.com/cotton/64/000000/cardboard-box--v2.png"/> &nbsp;
             <p style="font-size: 35px; font-family: 'Rambla', sans-serif; margin-top: -23px;"> parcelgo</p><br>
           </a>
+          
             <div class="columns">
                 <div class="column is-narrow">
+                  
                   <form action="" method="POST">
                     {% csrf_token %}
                     <div class="box" style="width: 400px;">
+                      <p>{{ invalid_cred }}</p>
+                      <br>
                       <div class="field">
                         <p class="control has-icons-left has-icons-right">
                           <input class="input" type="phone" placeholder="Phone" name="phone">

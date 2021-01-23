@@ -38,11 +38,11 @@
           Ongoing Order
         </a>
       </div>
-      <!-- <div class="level-item">
+      <div class="level-item">
         <a class="navbar-item" href="/order-history">
           Order History
         </a>
-      </div> -->
+      </div>
 
     </div>
   
@@ -174,9 +174,15 @@
                   <span><h6 class="title is-6">Total Cost: {{ total_price }}</h6></span>
                 </fieldset>
                 <br>
+                <!-- <form action="/payment">
+                  {% csrf_token %}
                 <button class="button is-success is-small">
                   Pay
                 </button>
+              </form> -->
+              <a href="http://127.0.0.1:8000/payment" target="_blank">
+                <input type="button" class="button is-success is-small" value="Pay"/>
+                </a>
                 </div>
               </div>
 

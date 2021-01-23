@@ -1,0 +1,103 @@
+{% load static %} {% static "" as baseURL %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ParcelGo!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{{baseURL}}style.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/octoshrimpy/bulma-o-steps/master/bulma-steps.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rambla:ital,wght@1,700&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <header class="hero is-light" style="padding: 10px;">
+        <div class="hero-head">
+          <!-- Main container -->
+<nav class="level">
+    <!-- Left side -->
+    <div class="level-left">
+      <div class="level-item">
+            <img style="float: left;" src="https://img.icons8.com/cotton/64/000000/cardboard-box--v2.png"/>
+      </div>
+      <div class="level-item">
+            <p style="font-size: 35px; font-family: 'Rambla', sans-serif; margin-top: -15px;"> parcelgo</p>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/cdash">
+          Place Order
+        </a>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/ongoing-order">
+          Ongoing Order
+        </a>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/order-history">
+          Order History
+        </a>
+      </div>
+
+    </div>
+  
+    <!-- Right side -->
+    <div class="level-right">
+      <p class="level-item"><strong>{{ username }}</strong></p>
+      <form action="/login">
+        {% csrf_token %}
+      <button class="button is-danger">
+        Logout
+      </button>
+    </form>
+    </div>
+  </nav>
+        </div>
+      </header>
+
+      <div class="section">
+        <div class="container">
+          <h1 class="subtitle is-2"><strong>Customer Dashboard | </strong>Order History</h1>
+          <hr>
+          <div class="box" style="width: fit-content;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Sender's Name</th>
+                  <th>Sender's Phone</th>
+                  <th>Pickup Addr.</th>
+                  <th>Receiver's Name</th>
+                  <th>Receiver's Phone</th>
+                  <th>Deliver Addr.</th>
+                  <th>Total Cost</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in orders %}
+                  <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.sender_name }}</td>
+                    <td>{{ order.sender_phone }}</td>
+                    <td>{{ order.pickup_address }}</td>
+                    <td>{{ order.receiver_name }}</td>
+                    <td>{{ order.receiver_phone }}</td>
+                    <td>{{ order.deliver_address }}</td>
+                    <td>{{ order.total_price }} RM</td>
+                    
+                  </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+  </body>
+</html>
