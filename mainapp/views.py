@@ -152,20 +152,15 @@ def cdash(request):
     
     else:
         try:
-            order = Orders.objects.get(sender_phone = request.session['phone'], order_status= 'placed')
-            if order.order_status == 'placed':
-                return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
-        except:
-            order = Orders.objects.get(sender_phone = request.session['phone'], order_status= 'picked')
-            if order.order_status == 'picked':
+            order = Orders.objects.filter(sender_phone = request.session['phone']).order_by('id').last()
+            print(order)
+            if order.order_status == 'placed' or order.order_status == 'picked':
                 return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
             else:
-                return render(request, "cdash.html")
+                return render(request, "cdash.html") 
+        except:
+            return render(request, "cdash.html")
 
-        # if order.order_status == 'placed' or order.order_status == 'picked':
-        #     return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
-        # else:
-        #     return render(request, "cdash.html") 
 
 
 
