@@ -152,11 +152,15 @@ def cdash(request):
     
     else:
         try:
-            order = Orders.objects.get(sender_phone = request.session['phone'], order_status = 'placed')
-            if order.order_status == 'placed' or order.order_status == 'picked':
+            order = Orders.objects.get(sender_phone = request.session['phone'], order_status= 'placed')
+            if order.order_status == 'placed':
                 return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
         except:
-            return render(request, "cdash.html")
+            order = Orders.objects.get(sender_phone = request.session['phone'], order_status= 'picked')
+            if order.order_status == 'picked':
+                return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
+            else:
+                return render(request, "cdash.html")
 
         # if order.order_status == 'placed' or order.order_status == 'picked':
         #     return render(request, "cdash.html", {"already": 'You have already an ongoing order!'})
@@ -187,7 +191,28 @@ def ongoing_order(request):
         }
         return render(request, "ongoing-order.html", context)
     except:
-        return render(request, "ongoing-order.html")
+        try:
+            orders = Orders.objects.get(sender_phone = request.session['phone'], order_status = 'picked')
+            
+            context = {
+                "height": orders.parcel_height,
+                "width": orders.parcel_width,
+                "length": orders.parcel_length,
+                "weight": orders.parcel_weight,
+                "total_price": orders.total_price,
+
+                "rcvr_name": orders.receiver_name,
+                "rcvr_phone": orders.receiver_phone,
+
+                "pickup_address": orders.pickup_address,
+                "deliver_address": orders.deliver_address,
+
+                "delman_name": orders.delman_name,
+                "delman_phone": orders.delman_phone
+            }
+            return render(request, "ongoing-order.html", context)
+        except:
+            return render(request, "ongoing-order.html")
         
 
 
